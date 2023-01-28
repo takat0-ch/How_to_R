@@ -1,0 +1,932 @@
+---
+title: "How to R"
+subtitle: "Version 0.1"
+author:
+  - "Takato Oyama"
+  - "Senshu University"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+library(here)
+library(tidyverse)
+library(kableExtra)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_mono_light(base_color = "#23395b",
+                 base_font_size = "22px")
+#style_duo_accent(
+#  primary_color = "#1381B0",
+#  secondary_color = "#FF961C",
+#  inverse_header_color = "#FFFFFF"
+#)
+```
+
+```{css, echo=FALSE}
+.level1 {
+  color:red; font-weight: bold; text-decoration:underline;
+  padding: 0px;
+  margin: 0px;
+}
+
+.level2{
+  color:red; text-decoration:underline;
+  text-decoration-color: #23395b;
+    padding: 0px;
+  margin: 0px;
+}
+
+.level3{
+  text-decoration:underline;
+}
+
+.pull-left {
+  float: left;
+  width: 72%;
+}
+.pull-right {
+  float: right;
+  width: 25%;
+}
+
+.remark-slide table{
+        width: 100%;
+    }
+    
+.code {
+  background-color: rosybrown;
+}
+.vertical {
+  display:flex;
+  justify-content: center; 
+}
+```
+
+
+# Introduction
+- 本資料はRで前処理を行うための知識をまとめたものである。
+- 心理学的研究を行う上で必要なRの情報を整理し、実際のコードとアウトプットを確認する。
+- 基本的なデータ分析をRで行ったことがある人に向けて書いてあるため、RやRstudioのインストールなどについてはここでは触れない。
+- 前処理について整理したものであるが、そうは言っても確認しておくべきプログラミングの知識(関数とは何か、パスとは何か)については触れざるをえないため、簡単にまとめる。
+- また、本資料で覚えておいてほしい単語については3段階のレベルに分けて強調文字を使用している。
+
+<span class="level1">レベル1 : Rを利用する上で頻出する関数や知識。何度も使用することがあるため、覚えておくと良いだろう。</span>
+
+<span class="level2">レベル2 : 解析の目的などに応じて必要になる関数や知識。人によっては覚えていなくても良いが、必要になった時に復習できるようにしておくと良い。</span>
+
+<span class="level3">レベル3 : Rを利用する上で、必須ではない知識。ただし、知っていると簡潔にコードを書けたりする。</span>
+
+---
+class: inverse center middle
+
+# Rを触る前に
+
+---
+name: preknowlede
+## 関数とは
+- Rに限らず多くのプログラミングでは、関数を使いながら処理を行う。
+- 関数：与えられた入力をもとに、定められた独自の処理を実行し、その結果を返す命令のことを指す。
+
+一度数学を思い出そう
+
+- $f(x)=x^2$ とは、 $x$ という入力があった場合にそれを二乗して出力する
+  - 入力は一つだけではなく、関数によっては複数必要な場合がある
+  - $f(x,y)=\frac{x}{y}$であれば、 $x$ と $y$ という二つの入力がなければ計算ができない
+
+- プログラミングでも同様で、mean(x)とはxという入力があった際に(xの中にいくつかの値がまとめられている)それを平均したものを出力する。
+  - Rにおけるround(x,y)という関数はxという数値を小数y桁目で四捨五入する
+  
+---
+name: preknowlede
+
+## 関数とは
+- 関数はあらかじめ決められた種類の入力しか受け付けてくれない
+  - $f(x)=x^2$という関数は $x$という入力を受け付けるが、 $y$ を入力しても計算できない
+  
+- プログラミングの関数においてどのような入力が必要かは事前に決められている
+- 関数に必要な入力のことをプログラミングでは<span class="level1">引数(argument)</span>と呼ぶ。
+
+  - cor関数の例
+      - Rでは相関係数を算出する際にcor関数を使う
+      - cor関数に必要な引数はx, y, methodである。
+      - 二つのデータ(xとy)とmethod(pearson, kendall, spearman)を指定することができる
+      -  実際にRで実行する際は以下のように記述する。
+```{r, eval=FALSE}
+cor(x = X, y = Y, method="spearman")
+```
+---
+## 関数とは
+- 引数は関数によって異なり、指定する順番が厳密に定められている。
+  - わざわざ引数の名称を指定せずともこの順番を守ってさえいれば正しく出力を返してくれる
+  - 例えば、以下のように記述しても先程のコードと全く同じように挙動する。
+```{r, eval=FALSE}
+cor(X, Y, "spearman")
+```
+- 引数の順番は厳密に決められていることからその順番のことを強調して一つ目の引数を<span class="level1">第一引数</span>と呼ぶ。
+  - 二つ目、三つ目も同様に第二引数、第三引数...と呼ぶ。
+    - 例) cor関数の第一引数はx、第二引数はy、第三引数はmethodである
+      - 例外として、引数名を指定しておけば順番を無視して記述することもできる。
+```{r, eval=FALSE}
+cor(method="speaman", y = Y, x = X)
+```
+- 引数の中には指定しなくても問題がある場合がある。例えばcor関数ではmethodを指定しなくても良い。
+  - これはデフォルトの入力が決められており、引数を指定しない場合はデフォルトの指定に従うためである(cor関数の場合methodのデフォルトは"pearson"になっている)。
+
+---
+## 関数とは
+- 何か関数を使いたい時に、「どんな引数をとるんだっけ？」といった困りごとが出てくる。
+- そんなときは`?関数名` あるいは `??関数名`を実行しよう
+  - RstudioのHelpタブにその関数の説明が表示される
+- 例えば、以下を実行すると
+```{r, eval=FALSE}
+?cor
+```
+<div style="text-align: center;"><img src="/How_to_R_slide/imgs/help.png" width="50%"><div>
+---
+name: path
+## パスとは何か
+- すでにRを触ったことがある人はディレクトリ・ワーキングディレクトリという用語を聞いたことがあるであろう。
+- パスとは
+  - 「ファイルやフォルダの置いてある場所を示す情報。」
+  - あるいは「ファイルやフォルダの置いてある場所を示す情報。」+「ファイル名」
+    - パソコンの中の住所(経路)と考えて良い。あるいは住所+名前。
+- 実際に分析する際は、データファイルを読み込みながらスクリプトファイルを編集する。
+  - <span class="level1">データファイルなどを読み込むにはパス(住所)を必ず指定しなければならない。
+- パスはパソコンの中で階層構造になっている。以下にwidonwsとmacのパスの例を示す
+  - C:\\Users\\takato\\Documents\\KJ1\囚人のジレンマ\\レポート.docs
+  - /Users/takato/documents/KJ1/囚人のジレンマ/レポート.docs
+- <span class="level1">ワーキングディレクトリ</span>
+  - パスの起点を示す。
+  - Rでは<span class="level2">setwd()</span>で起点を設定でき,<span class="level2">getwd()</span>で起点がどこか確認することができる 
+
+<p style="font-size: 18px;">(注)ディレクトリはフォルダと言い換えてもらってかまわない</p>
+---
+name: path
+## 絶対パスと相対パス
+- <span class="level3">絶対パス</span>
+  - フルパスとも呼ばれる
+  - 階層構造の頂点から目的地までの経路を全て記述したパス。
+    - 全ての経路を記述しているため、ワーキングディレクトリ(起点)に依存せずさまざまなファイルにアクセスできる
+    - 長くなるので記述が面倒という欠点がある
+    
+- <span class="level3">相対パス</span>
+  - ワーキングディレクトリ(起点)から目的地までの経路を記述したパス。
+    - 例) KJ1ディレクトリがワーキングディレクトリだった場合以下でファイルにアクセスすることができる
+      - 囚人のジレンマ/レポート.docs
+  - 短く記述できるという長所がある一方、ワーキングディレクトリを変更したり、フォルダ整理すると階層構造が変わるためアクセスできなくなる場合がある。
+
+---
+name: package
+## パッケージとは何か
+- Rには統計解析を行う上で解析を楽にする関数がデフォルトでたくさんある。
+  - この標準搭載の関数で基本的な解析は問題なく行える
+  - しかし、標準搭載の関数では実装されていない解析手法やよりわかりやすく記述することができように追加で実装された関数などがある
+  - このようにRの機能を拡張する関数、データ、資料の集まりを<span class="level1">package(パッケージ)</span>と呼ぶ。
+- 例えば、心理学者がよく使う分析を楽に行うための関数がたくさん入ったpsychパッケージなどがある
+- 使用したいパッケージを見つけた際はまずインストールする必要がある(基本的には一度行う)。
+  - `install.packages("パッケージ名")`とする
+    - 一度インストールすれば問題ないが、バージョンアップする際はもう一度実行する必要がある
+- また、そのパッケージを実際に利用する際は毎回そのことを明示する必要がある
+  - `library(パッケージ名)`とする
+  
+```{r,eval=FALSE}
+install.packages("psych")
+library(psych)
+```
+
+---
+name: type_data
+## ワイドデータとロングデータ
+.pull-left[
+- データの形は大きく分けてワイドデータとロングデータの2種類ある
+- <span class="level1">ワイドデータ</span>
+  - 横持ちデータとも呼ばれる
+  - 列名もデータの一部になっていることがある。
+- 右のようなデータで、列がIDと実験条件などになっている。
+  - 条件が増えると列数が増えていく
+  - SPSSやJASP、Excelなどでの処理は基本的にはこの形
+  - 列名にデータが含まれるため、統計解析においてはあまり向いていない
+
+```{r echo=FALSE}
+library(tidyverse)
+long <- data.frame(ID=rep(1:10,3,each=3),
+           condition=rep(c("A","B","C"),10) %>% as.factor(),
+           Accuracy = runif(30, min=50, max=98) %>% round(digits=0) %>% as.integer())
+
+
+wide <- data.frame(ID=rep(1:10,3,each=3),
+           condition=rep(c("A","B","C"),10),
+           Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>% 
+  pivot_wider(names_from = condition,
+              values_from = Accuracy,
+              values_fn = mean)
+tblwide <- knitr::kable(head(wide), format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 32)
+
+  
+```
+]
+.pull-right[
+```{r, echo=FALSE}
+
+tblwide
+```
+  
+]
+
+---
+name: longdata
+## ワイドデータとロングデータ
+.pull-left[
+- <span class="level1">ロングデータ</span>
+  - 縦持ちデータ、tidyデータ、整然データとも呼ばれる
+  - 個々の値が1つのセルをなしており、個々の変数が1つの列をなしている。
+  - 個々の観測が1つの行をなしており、データが増えると縦に伸びていく。
+- ロングデータとワイドデータのどちらが優れいているかというよりも、自身の解析目的とソフトウェアに合ったデータの形に処理する必要がある。
+
+- 本資料で扱うtidyverseパッケージとはこのようなtidyデータを簡単に扱う関数群である
+]
+.pull-right[
+```{r, echo=FALSE}
+tbllong <- knitr::kable(head(long), format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 26)
+tbllong
+```
+  
+]
+
+---
+name: object
+## オブジェクトとは何か
+- Rにおける<span class="level2">オブジェクト</span>とは、変数や文字列、データのかたまりのことを指す
+  - 何らかの変数や値を持つ入れ物と考えて良い。
+  - R上で`A <- 1`と入力したら、Aというオブジェクトの中に1という値が入る(代入する)ことになる
+    - `A <- "Hello"`とすれば、Aのオブジェクトに"Hello"という文字列が代入されることになる
+- どんなモノでもオブジェクトに格納できるが、中身がどのような型かはR上で識別されている。
+- 関数によって入力できるデータ型は決められているため、データ型を把握しておかなければ予期せぬエラーが吐かれることがある。
+  - 例えば、実験のデータをcsvファイルで読み込んだ際に、数値のデータが文字列型として記録されていることがある。
+  - このデータを用いて平均値を算出しようとしても文字列なので計算できない。
+  - このような場合は`as.numeric()`などの関数を用いて、文字列から変換する必要がある。
+    - 後述する`mutate()`関数と併用すると直感的でわかりやすく処理できる。
+- ここではデータ型について詳細まで触れないが、以下のサイトなどが参考になる。
+  https://obgynai.com/r-object-orientation/
+  https://tomoecon.github.io/R_for_graduate_thesis/Rbasics.html
+
+---
+class: inverse center middle
+
+# Rstudioを開いたら
+
+---
+name: rproject
+## Rproject
+- RStudioには<span class="level2">「プロジェクト」</span>という機能がある。
+  - ファイル管理が簡単になるため、使用することを推奨する。
+  - いくつか利用の利点があるが、ここでは割愛する。
+  - 作成方法はここでは触れない。
+- 以下のサイトがわかりやすい。
+
+[Rstudioの使い方](https://tomoecon.github.io/R_for_graduate_thesis/RStudio.html#%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E4%BD%9C%E6%88%90)
+
+- 1つの研究プロジェクトにつき、Rプロジェクトを作ると管理が非常にしやすい。
+  - プロジェクトを作成するとそのディレクトリが自動的にワーキングディレクトリに設定される。
+  - Rプロジェクトを作成し、そのディレクトリの中に「analysis」「data」「output」「docs」などのディレクトリを作成すると良い。
+    - 分析は全て「analysis」ディレクトリに、メモや論文の原稿などは「docs」ディレクトリに入れておくと管理がしやすい。
+    - ワーキングディレクトリは基本的にいじらず、パスを指定してデータへのアクセスや図の保存先を指定すると良いだろう。
+---
+name: here
+## here package
+- <span class="level3">hereパッケージ</span>は簡単に絶対パスを取得できる`here()`関数を使えるようになる
+  - この`here()`関数はRプロジェクトと密接に関わっており、プロジェクトファイル(.Rproj)のあるディレクトリのパスを取得できる
+  - 下の階層のディレクトリやファイルにアクセスする際は引用符で囲み指定する。
+```{r}
+library(here)
+here()
+here("data","sample.csv")
+```
+- dataディレクトリのsample.csvファイルを読み込みたい場合は以下のようにすれば良い
+```{r, eval=FALSE}
+read.csv(here("data","sample.csv"))
+```
+
+---
+class: inverse center middle
+
+# いざtidyverseへ！
+---
+name: tidyverse
+
+## tidyverse package
+- <span class="level1">tidyverse</span>はreadrパッケージやdplyrパッケージなどのパッケージをまとめたパッケージである
+  - 前述したようにtidyデータを処理する際に便利な関数やデータをまとめている。
+- tidyverseの中にあるパッケージをまとめた
+  - <span class="level1">magrittr</span> : パイプ(%>%)演算子の機能を提供するパッケージ
+  - <span class="level1">dplyr</span> : データの抽出・加工・操作のためのパッケージ
+  - <span class="level1">stringr</span> : 文字列を処理するためのパッケージ
+  - <span class="level1">ggplot2</span> : 図の描画などグラフィックスに特化したパッケージ
+  - <span class="level2">readr</span> : データの読み込みに特化したパッケージ
+  - <span class="level2">purrr</span> : 関数型プログラミングを実装するパッケージ(並列処理を可能にする)
+  - <span class="level2">tibble</span> : tibble型データを作成、操作するパッケージ
+  - <span class="level2">tidyr</span> : tidyデータを作成、操作するパッケージ
+  - <span class="level3">forcats</span> : factor型データを処理するパッケージ
+
+- 本資料はこれらのパッケージの中で実験心理学で頻出するであろう便利な関数を**ほんの少しだけ**紹介する
+---
+class: inverse center middle
+
+# パイプ演算子　%>% 
+---
+
+name: pipe
+
+## パイプ演算子 %>% 
+- tidyverseを使う上で必ず必要になるパイプ。
+- よりスマートなコードを書くことを可能にする。
+- Rコードは様々な関数を組み合わせて最終的なゴール(理想的なデータの形)へと向かっていく
+  - しかし、関数を複数個使うとコードは煩雑になり、どこでどのような処理を行なっていくのかわからなくなる。
+  - そんな問題を解決するのが<span class="level1">パイプ演算子</span>なのだ。
+- <span class="level1">パイプ演算子は前のオブジェクトを後ろの関数の第一引数に渡してくれる。</span>
+- 例えば何か平均を算出する時、パイプを使わないと以下になる
+```{r, eval=FALSE}
+mean(x)
+```
+- パイプを使うと以下
+```{r, eval=FALSE}
+x %>% mean()
+```
+
+---
+name: pipe
+## パイプ演算子 %>% 
+- 短いコードだと恩恵が分かりにくいが、複数の関数が出てくると非常に煩雑になる
+  - 三つの関数が連なるとイメージは以下
+    - パイプなし : `h(g(f(x)))`
+    - パイプあり : `x %>% f() %>% g() %>% h()`
+- コードを記述するとき思考の流れは`f() → g() → h()`という処理を考えているはずだ。
+  - しかし、パイプなしでコードで書くと`h()  → g() → f()`という順になってしまう。
+  - パイプは思考の流れに沿ったコードの記述が可能になるため、非常に重宝する。
+- あるデータの平均値を算出し、小数点以下を四捨五入することを考える
+- パイプなし : (四捨五入の関数を先に書くことになる)
+
+```{r, eval=FALSE}
+round(mean(x), 0)
+```
+  
+- パイプあり : (xを平均して、四捨五入するという思考の流れと一致する。)
+  
+```{r, eval=FALSE}
+x %>% mean() %>% round(0)
+```
+
+
+---
+name: readr
+## read_csv
+- まずはデータを読み込もう。
+- csvファイルをRで読み込む際はreadrパッケージにある<span class="level1">`read_csv()`</span>がおすすめである。
+- デフォルトで搭載されている`read.csv()`に比べて処理が早く、複数のcsvファイルをまとめて読み込むことができるという素晴らしい機能を持つ。`read.csv()`を使っている方は今すぐ乗り換えるべきだ。
+
+- 指定したパスにあるファイル名を取得する`list.files()`とパスを取得する`here()`を使えば、簡単だ。
+  - 例えば、dataディレクトリにはparticipant1.csvとpartipant2.csvという二つのデータがあったとしよう。
+```{r}
+list.files(here("data"), full.names = TRUE)
+```
+
+---
+name: readr
+## read_csv
+- また、この2つのパスをオブジェクトに格納し、`read_csv`で読み込めば良い。
+```{r}
+files <- list.files(here("data"), full.names = TRUE)
+df <- read_csv(files)
+```
+- 参加者の人数分csvファイルがある場合はこのようにすれば良い。
+- 1つの研究プロジェクトで複数の実験がある場合はdataディレクトリの中に新たにExp1,Exp2などのディレクトリを作成し、階層化しておくと良いだろう。
+  - <span class="level1">プログラミングにおいてディレクトリ管理は避けては通れない</span>。
+  
+---
+
+class: inverse center middle
+# データ例
+
+---
+name: exdata
+## データ例
+- 本資料では以下のような実験データセットを例にする。
+- 実験データ(df)
+  - 文字・色ストループの実験データ
+  - インクの色が赤ならfキー、緑ならjキーを押す課題である。
+  - 2人の参加者の練習試行10試行。本試行30試行でデータは60行ある。
+  - 練習試行のデータはpractice列がpracticeで、本試行はmainが入っている。
+  
+
+```{r, echo=FALSE}
+df <- data.frame(trial=1:20,
+                 word = rep(c("red","green"),10),
+                 ink = rep(c("red","green"), 10, each=2),
+                 response = rep(c("f","j"), 10,each=2),
+                 reactiontime = rnorm(40, 400, 30) %>% round(0),
+                 ID=rep(1:2,each=20, length=40)
+                 ) %>% 
+  select(ID,!ID)
+
+df <- data.frame(trial=1:30,
+                 word = rep(c("red","green"),15),
+                 ink = rep(c("red","green"), 15, each=2),
+                 response = rep(c("f","j"), 15,each=2),
+                 reactiontime = rnorm(60, 400, 30) %>% round(2),
+                 ID=rep(1:2,each=30, length=60),
+                 practice=c(rep("practice", 10),rep("main",20),rep("practice", 10),rep("main",20))) %>% 
+  select(ID,!ID)
+
+
+```
+
+```{r, echo=FALSE}
+knitr::kable(head(df,4), format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 26)
+```
+---
+
+class: inverse center middle
+# dplyr
+
+
+---
+
+name: filter
+## `filter()`
+- <span class="level1">filter()</span>は行選択の関数である。
+- 指定した列の条件に合う行のみを抽出する際に使用する。
+- 例えば、本試行のデータのみを抽出するには以下になる
+```{r, eval=FALSE}
+df %>% 
+  filter(practice == "main")
+```
+
+- `==`は $=$ を表し、`!=`は $\neq$ を表す。
+  - 上記の例は`filter(practice != "practice")`でも同様の結果になる。
+- `>`や`<`などの不等号も使用できる。また、以上、以下は`>=`、`<=`で表現される。
+  - 例えば反応時間が100未満を除く場合は
+```{r, eval=FALSE}
+df %>% 
+  filter(reactiontime > 100)
+```
+
+---
+name: mutate
+## `mutate()`
+- <span class="level1">mutate()</span>は新たな列を作成する関数である。
+- 新たな列名とどのような列を作成するのかを指定する。
+- 例えば、反応時間の少数を四捨五入して、それを新たな列RTとするのであれば以下になる
+
+```{r, eval=FALSE}
+df %>% 
+  mutate(RT = round(reactiontime, 0))
+```
+```{r, echo=FALSE}
+df %>% 
+  mutate(RT = round(reactiontime, 0)) %>% 
+  head(4) %>% 
+knitr::kable(format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 26)
+```
+
+---
+name: casewhen
+## `case_when()`
+- <span class="level1">case_when()</span>は`mutate()`とともに使われ、指定した条件によって異なる値を返す関数である。
+- ストループ課題において、データから文字と色の条件を判定し、`mutate()`で新たな列を作成するなら以下である
+
+```{r, eval=FALSE}
+df %>% 
+  mutate(congruency = case_when(word == ink ~ "congruent",
+                                word != ink ~ "incongruent"))
+```
+
+```{r, echo=FALSE}
+df %>% 
+  mutate(congruency = case_when(word == ink ~ "congruent",
+                                word != ink ~ "incongruent")) %>% 
+  head(4) %>% 
+knitr::kable(format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 26)
+```
+
+---
+name: casewhen
+## `case_when()`
+- `filter()`のときと同様に条件式を記述できる。
+- 条件式の後にチルダ(~)をつけ、その条件式に合う場合はどのような値を返すかを指定している。
+- また、指定した条件式以外の条件をまとめて値を返すこともできる。
+  - その際は`TRUE ~ 値`として記述すれば良い。
+  - 以下のコードは先程のコードと同じ出力になる。
+```{r, eval=FALSE}
+df %>% 
+  mutate(congruency = case_when(word == ink ~ "congruent",
+                                TRUE ~ "incongruent")) 
+```
+---
+name: select
+## `select()`
+- <span class="level1">`select()`</span>は列の抽出、並び替えを可能にする。
+- データには多くの変数がある。また、`mutate()`で新しい列を作ると不要な列が出てくる。
+  - 必要な列のみを抽出する。あるいは不要な列を削除する場合は`select()`を使用する。
+- 例えば、ID列、word列、ink列、reactiontime列のみを抽出する場合は以下になる
+
+```{r, eval=FALSE}
+df %>% 
+  select(ID, word,ink,reactiontime)
+```
+```{r, echo=FALSE}
+df %>% 
+  select(ID, word,ink,reactiontime) %>% 
+  head(4) %>% 
+  knitr::kable(format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 26)
+```
+---
+name: select
+## `select()`
+- `select()`は様々な指定の仕方がある。
+  - 具体的に列名を指定するのではなく、「何番目の列か」で指定することができる
+      - 1列目と3列目を指定するなら　→　
+.code[`select(1,3)` ]
+  - 「~から~まで」と範囲で指定することができる(コロン(:)を使う)
+      - ID列からword列までを指定するなら → 
+.code[`select(ID:word)`]
+  - 不要な列を指定する場合はマイナスの記号をつける
+      - word列とink列を削除するなら → 
+.code[`select(-word, -ink)`]
+  - 指定した列以外を抽出する場合は`!`をつける
+      - reactiontime列以外を抽出するなら → 
+.code[`select(!reactiontime)`]
+  - select関数はある特定の関数とともに使用することができる
+      - `starts_with()`関数とともに使えば、特定の列名から始まる列のみを抽出することができる
+      - 列名が「Q」から始まる列を抽出するのであれば → 
+.code[`select(starts_with("Q"))`]
+      - 質問紙調査などの分析をする際に重宝する。
+      
+---
+name: summarise
+##  `summarise()`
+- <span class="level1">`summarise()`</span>はデータを要約する際に用いる。
+  - どのような関数を使うか、どの列の値を用いるかを指定することができる
+  - また、要約した際の列名を指定する必要がある
+
+- reactiontime列の平均値と標準偏差を求める場合は以下になる
+
+```{r, eval=FALSE}
+df %>% 
+  summarise(M = mean(reactiontime), SD = sd(reactiontime)) 
+```
+
+```{r, echo=FALSE}
+df %>% 
+  summarise(M = mean(reactiontime), SD = sd(reactiontime)) %>% 
+  knitr::kable(format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 26)
+```
+
+---
+name: groupby
+## `group_by()`
+- <span class="level1">`group_by()`</span>はグループごとに`summarise()`を使用する際にグループを指定する。
+  - `summarise()`を単純に使用すると全ての値を要約してしまう。
+  - ある条件ごとに(グループごとに)要約をする場合は`group_by()`でグループを指定してから要約する
+- IDごとにreactiontimeの平均と標準偏差を求める場合は以下になる
+```{r, eval=FALSE}
+df %>% 
+  group_by(ID) %>% 
+  summarise(M = mean(reactiontime), SD = sd(reactiontime))
+```
+
+```{r, echo=FALSE}
+df %>% 
+  group_by(ID) %>% 
+  summarise(M = mean(reactiontime), SD = sd(reactiontime)) %>% 
+  knitr::kable(format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 26)
+```
+
+---
+name: groupby
+## `group_by()`
+- `group_by()`でグループ化を解除する際は<span class="level2">`ungroup()`</span>を用いる。
+  - グループ化の解除をし忘れると求めたいものではなくなってしまう。
+  - 問題ない場合もあるが、以下のように`group_by()`を実行したら`ungroup()`で解除する癖を身につけておくと良いだろう。
+  
+```{r, eval=FALSE}
+df %>% 
+  group_by(ID) %>% 
+  summarise(M = mean(reactiontime), SD = sd(reactiontime)) %>% 
+  ungroup()
+```
+
+---
+name: leftjoin
+## `left_join()`
+- <span class="level2">`left_join()`</span>は2つのデータフレームを結合する際に用いる
+  - 指定した列を基に結合し、列を増やす。
+  - 例えば、以下のような質問紙のデータ二つ(AとB)がある
+  
+```{r, echo=FALSE}
+A <- data.frame(ID=1:4,
+                Q1 = runif(4, 
+                      min = 1,
+                      max = 5) %>% round(0),
+                Q2 = runif(4, 
+                      min = 1,
+                      max = 5) %>% round(0))
+B <- data.frame(ID=1:4,
+                Q3 = runif(4, 
+                      min = 1,
+                      max = 5) %>% round(0),
+                Q4 = runif(4, 
+                      min = 1,
+                      max = 5) %>% round(0))
+```
+.vertical[
+<div style = "margin: 10px">
+```{r, echo=FALSE}
+A %>% 
+knitr::kable(format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 20)
+```
+</div>
+<div style = "margin: 10px">
+```{r, echo=FALSE}
+B %>% 
+knitr::kable(format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 20)
+```
+</div>
+]
+
+---
+name: leftjoin
+## `left_join()`
+- この2つのデータをID列で紐づけて結合するには以下のようにする
+```{r, eval=FALSE}
+A %>% 
+  left_join(B, by="ID")
+```
+
+```{r, echo=FALSE}
+A %>% 
+  left_join(B, by="ID") %>% 
+  knitr::kable(format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 20)
+```
+- AのデータにIDで紐づけてBを結合している。
+- `right_join()`や`full_join()`関数などもあり、挙動が少し変わる。
+  - 実際に触って確認すると良いだろう。
+
+---
+name: bindrows
+## `bind_rows()`
+- <span class="level2">`bind_rows()`</span>は2つのデータを行方向に結合する際に使用する。
+  - 二つのデータの列数が一致しないとエラーになる。
+  - 二人分の参加者のデータをデータを一つに結合する際に使用できる。
+  - `read_csv()`ではなく、`read.csv()`などを用いて、個別にデータを読み込み、結合する際に使用できるだろう。
+    - 大量の参加者のデータを結合する際は`for`文で繰り返し処理などを行う必要があり、コードが長くなるため、おすすめしない。
+- 例えば、サンプルデータがIDごとに分かれている以下のようなデータ二つ(AとB)があるとする。
+```{r, echo=FALSE}
+A <- df %>% filter(ID == 1) %>% slice(1:3)
+B <- df %>% filter(ID == 2) %>% slice(1:3)
+```
+.vertical[
+<div style = "margin: 20px">
+```{r,echo=FALSE}
+A %>% 
+knitr::kable(format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 20)
+```
+</div>
+<div style = "margin: 20px">
+```{r, echo=FALSE}
+B %>% head(3) %>% 
+knitr::kable(format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 20)
+```
+</div>
+]
+---
+name: bindrows
+## `bind_rows()`
+- データAにBを結合するのであれば
+```{r, eval=FALSE}
+A %>% 
+  bind_rows(B)
+```
+```{r, echo=FALSE}
+A %>% bind_rows(B) %>% 
+knitr::kable(format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 20)
+```
+
+---
+name: bindcols
+## `bind_cols()`
+- <span class="level2">`bind_cols()`</span>は2つのデータを列方向に結合する際に使用する。
+  - `left_join()`とは異なり、2つのデータで列名が重複する場合は、列名が勝手に修正される。
+  - また、二つのデータで行数が一致しない場合はエラーになる。
+- 質問紙のデータ二つを考える
+
+```{r, echo=FALSE}
+A <- data.frame(ID=1:4,
+                Q1 = runif(4, 
+                      min = 1,
+                      max = 5) %>% round(0),
+                Q2 = runif(4, 
+                      min = 1,
+                      max = 5) %>% round(0))
+B <- data.frame(ID=1:4,
+                Q3 = runif(4, 
+                      min = 1,
+                      max = 5) %>% round(0),
+                Q4 = runif(4, 
+                      min = 1,
+                      max = 5) %>% round(0))
+```
+.vertical[
+<div style = "margin: 10px">
+```{r, echo=FALSE}
+A %>% 
+knitr::kable(format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 20)
+```
+</div>
+<div style = "margin: 10px">
+```{r, echo=FALSE}
+B %>% 
+knitr::kable(format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 20)
+```
+</div>
+]
+---
+name: bindcols
+## `bind_cols()`
+- AにBを結合するのであれば
+```{r, eval=FALSE}
+A %>% 
+  bind_cols(B)
+```
+
+```{r, echo=FALSE}
+A %>% 
+  bind_cols(B) %>% 
+  knitr::kable(format = 'html', align="rrr") %>% 
+  kable_styling(full_width = TRUE,font_size = 20)
+```
+
+---
+class: inverse center middle
+
+# 終わりに
+
+---
+name: end
+## 終わりに
+- 本資料で扱った関数はtidyverse(主にdplyr)の中のほんの一部である。
+  - ここで紹介した関数の派生系のものもあるが、ここでは紹介できなかった。
+  - 文字列処理のstringrや可視化のためのggplot2などもあり、紹介できなかったものは少しずつバージョンアップデートするつもりである。
+- 基本的なRとRstudioの使い方、tidyverseの使い方は以下の書籍が参考になる
+  - 初学者は教科書的に持っておくと有用かもしれない。
+<div style="text-align: center;"><img src="/How_to_R_slide/imgs/book.jpeg" width="17.5%"></div>
+[RユーザのためのRStudio[実践]入門〜tidyverseによるモダンな分析フローの世界](https://gihyo.jp/book/2021/978-4-297-12170-9). 
+
+---
+name: cheatsheet
+## チートシート
+- Rに限らず、プログラミング言語では多くの場合チートシートが作成される
+  - チートシートは文字通り、チートするための情報が情報が書かれている。
+  - 例えば、dplyrとtidyrのチートシートは以下である
+  
+https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
+
+- 本資料で紹介した関数も含めてその関数の引数、挙動が視覚的にまとめられている。
+  - 非常に有用である。
+  - ただし、このチートシートも全ての関数を紹介しきれているわけではないので、自分のやりたい処理がチートシートに載っていないからといって落胆する必要はない。
+- バージョンアップデートなどで少し変化があったりもするので注意が必要である。「dplyr cheat sheet」などでググれば見つかるはずである。
+- 他にもggplotのチートシートなどもあり、自身がよく使うパッケージのパッケージのチートシートが作成されていないか確認すると良いだろう。
+
+---
+name: end
+## 終わりに
+- 最後にストループ課題のデータのサンプルデータとデータ整形のサンプルスクリプトは以下である。
+- データ整形から外れ値の処理、論文に必要な要約統計量の記述、ggplot2による可視化までを含む。
+
+
+```{r, echo=FALSE}
+xfun::embed_dir(here("sample"), text = 'Download full data & script')
+```
+
+```{r, echo=FALSE,include=FALSE}
+df <- data.frame(trial=1:120,
+                 word = rep(c("red","green"),15),
+                 ink = rep(c("red","green"), 15, each=2),
+                 response = rep(c(0,1), 15,each=2),
+                 reactiontime = rnorm(60, 400, 30) %>% round(0),
+                 ID=rep(1:8,each=30, length=240),
+                 practice=c(rep("practice", 10),rep("main",20),rep("practice", 10),rep("main",20)))
+
+df <- df %>% 
+  mutate(rnd = runif(nrow(df),0,1) %>% round(2),
+         resp = case_when(rnd < 0.1 ~ (response - 1) %>% base::abs(),
+                          TRUE ~ response)) %>% 
+  mutate(response = case_when(resp == 0 ~ "f",
+                              TRUE ~ "j")) %>% 
+  select(ID,!ID,-resp, -rnd)
+df.origin <- df %>% 
+  mutate(congruency = case_when(word == ink ~ "Congruent",
+                                word != ink ~ "Incongruent"),
+         resp_color = case_when(response == "f" ~ "red",
+                                response == "j" ~ "green"),
+         ans = case_when(ink == resp_color ~ 1,
+                         ink != resp_color ~ 0)) %>% 
+  filter(practice == "main") %>% 
+  select(ID, congruency, reactiontime, ans)
+
+outlier_baseline <- df.origin %>% 
+  group_by(ID, congruency) %>% 
+  summarise(M = mean(reactiontime), SD = sd(reactiontime)) %>% 
+  ungroup()
+
+## outlier is +- 3SD
+
+df.main <- df.origin %>% 
+  left_join(outlier_baseline, by=c("ID","congruency")) %>% 
+  mutate(outlier = case_when(reactiontime < M-3*SD ~ 0,
+                             reactiontime > M+3*SD ~ 0,
+                             TRUE ~ 1)) %>% 
+  filter(ans == 1,
+         outlier == 1) %>% 
+  select(ID, congruency, reactiontime)
+
+for_ttest <- df.main %>% 
+  group_by(ID, congruency) %>% 
+  summarise(reactiontime = mean(reactiontime)) %>% 
+  ungroup()
+
+t.test(reactiontime ~ congruency, data=for_ttest)
+
+for_plot <- for_ttest %>% 
+  group_by(congruency) %>% 
+  summarise(ReactionTime = mean(reactiontime), 
+            n = n(),
+            SE = sd(reactiontime)/sqrt(n))
+
+library(papaja)
+library(scales)
+ ggplot(data=for_plot,
+            aes(x=congruency,
+                y=ReactionTime,
+                fill=congruency))+
+  geom_col(position = "dodge")+
+   geom_errorbar(aes(ymin = ReactionTime-SE,
+                     ymax = ReactionTime+SE),
+                 width = 0.1)+
+   scale_y_continuous(limits = c(300, 410),
+                      breaks = seq(300,410,20),
+                      oob = squish)+
+   papaja::theme_apa()
+```
+
+```{r, include=FALSE, echo=FALSE}
+write <- df %>% mutate(ID2=ID) %>% 
+  group_by(ID2) %>% 
+  nest 
+  
+w <- list(ID=write$ID2,
+              df = write$data)
+w %>% 
+  map2(.x = w$df,
+       .y = w$ID,
+       .f = ~write_csv(.x, file=paste0(here("sample","data"),"/part",as.character(.y),".csv")))
+
+```
+
+  

@@ -1,0 +1,512 @@
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"))+
+geom_vline(xintercept = k)
+ggplot(test, aes(x=type, y = dependent))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"))+
+geom_vline(xintercept = "k")
+ggplot(test, aes(x=type, y = dependent))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"))+
+geom_vline(xintercept = "k")+
+ggplot(test, aes(x=type, y = dependent))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"))+
+geom_vline(xintercept = "k")
+ggplot(test, aes(x=type, y = dependent))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"))+
+geom_vline(xintercept = "k")
+?geom_vline
+ggplot(test, aes(x=type, y = dependent))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+test <- data.frame(type=as.factor(rep(c("A","B","C"), 1200)),
+dependent = rnorm(1200, 10, 100))
+View(test)
+ggplot(test, aes(x=type, y = dependent))+
+geom_violin()
+ggplot(test, aes(x=type, y = dependent))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"))
+ggplot(test, aes(x=type, y = dependent))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"))
+ggplot(test, aes(x=type, y = dependent))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+ggplot(test, aes(x=type, y = dependent, color=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"))+
+geom_vline(xintercept = "k",
+linetype="dashed")+
+ggplot(test, aes(x=type, y = dependent, color=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+ggplot(test, aes(x=type, y = dependent, color=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+test <- data.frame(type=as.factor(rep(c("A","B","C"), 1200)),
+rt = rnorm(1200, 10, 100))
+ggplot(test, aes(x=type, y = rt, color=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+xaringan:::inf_mr()
+?cor
+library(tidyverse)
+test <- data.frame(type=as.factor(rep(c("A","B","C"), 1200)),
+rt = rnorm(1200, 10, 100))
+ggplot(test, aes(x=type, y = rt, color=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+??scale_x_discrete
+ggplot(test, aes(x=type, y = rt, color=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+ggplot(test, aes(x=type, y = rt, color=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+ggplot(test, aes(x=type, y = rt, color=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+ggplot(test, aes(x=type, y = rt, color=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "a"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+C
+ggplot(test, aes(x=type, y = rt, color=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+ggplot(test, aes(x=type, y = rt, color=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"),
+labels=c("B", "A", NULL, "aa"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+ggplot(test, aes(x=type, y = rt, color=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"),
+labels=c("B", "A", NULL, "a¥na"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+ggplot(test, aes(x=type, y = rt, color=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"),
+labels=c("B", "A", NULL, "a\na"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+??scale_fill_discrete
+test <- data.frame(type=as.factor(rep(c("A","B","C"), 1200)),
+rt = rnorm(1200, 10, 100))
+ggplot(test, aes(x=type, y = rt, color=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"),
+labels=c("B", "A", NULL, "a\na"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+ggplot(test, aes(x=type, y = rt, color=type, fill=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"),
+labels=c("B", "A", NULL, "a\na"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+test %>%
+mutate(Target Type = type)
+test %>%
+mutate(`Target Type` = type)
+test %>%
+mutate(`Target Type` = type) %>%
+head
+test %>%
+mutate("Target Type" = type) %>%
+head
+test %>% head
+test %>%
+mutate("Target Type" = type) %>%
+head
+a
+ggplot(test, aes(x=Target Type, y = rt, color=type, fill=type))+
+ggplot(test, aes(x="Target Type", y = rt, color=type, fill=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"),
+labels=c("B", "A", NULL, "a\na"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+ggplot(test, aes(x=`Target Type`, y = rt, color=type, fill=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"),
+labels=c("B", "A", NULL, "a\na"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+test <- test %>%
+mutate("Target Type" = type)
+test %>% head
+a
+ggplot(test, aes(x=Target Type, y = rt, color=type, fill=type))+
+ggplot(test, aes(x="Target Type", y = rt, color=type, fill=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"),
+labels=c("B", "A", NULL, "a\na"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+ggplot(test, aes(x=`Target Type`, y = rt, color=type, fill=type))+
+geom_violin()+
+scale_x_discrete(limits=c("B", "A","k", "C"),
+breaks=c("B", "A", NULL, "C"),
+labels=c("B", "A", NULL, "a\na"))+
+geom_vline(xintercept = "k",
+linetype="dashed")
+library(xaringan)
+xaringan:::inf_mr()
+xaringan:::inf_mr()
+xaringan:::inf_mr()
+getwd()
+~/Documents
+getwd()
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+fig.width=9, fig.height=3.5, fig.retina=3,
+out.width = "100%",
+cache = FALSE,
+echo = TRUE,
+message = FALSE,
+warning = FALSE,
+hiline = TRUE
+)
+library(here)
+data.frame(rep(c("A","B","C"),10))
+?rep
+data.frame(ID=rep(1,10,each=3),
+condition=rep(c("A","B","C"),10))
+data.frame(ID=rep(1,10,each=1),
+condition=rep(c("A","B","C"),10))
+data.frame(ID=rep(1,3,each=1),
+condition=rep(c("A","B","C"),10))
+data.frame(ID=rep(1,3,each=1),
+condition=rep(c("A","B","C"),10))
+data.frame(ID=rep(1:3,10,each=1),
+condition=rep(c("A","B","C"),10))
+data.frame(ID=rep(1:3,10),
+condition=rep(c("A","B","C"),10))
+data.frame(ID=rep(1:10,3),
+condition=rep(c("A","B","C"),10))
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10))
+library(tidyverse)
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10)) %>%
+pivot_wider(names_from = condition)
+?runif
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98)) %>%
+pivot_wider(names_from = condition,
+vakues)
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98))
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(names_from = condition,
+vakue)
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0))
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(names_from = condition,
+values_from = Accuracy)
+test <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(names_from = condition,
+values_from = Accuracy)
+View(test)
+runif(30, min=50, max=98)
+test <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0))
+View(test)
+??pivot_wider
+test <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(id_cols=ID,
+names_from = condition,
+values_from = Accuracy)
+View(test)
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0))
+View(test)
+test <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+select(-ID) %>%
+pivot_wider(id_cols=ID,
+names_from = condition,
+values_from = Accuracy)
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+select(-ID)
+test <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+select(-ID) %>%
+pivot_wider(names_from = condition,
+values_from = Accuracy)
+test
+View(test)
+test <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(id_cols=ID,
+names_from = condition,
+values_from = Accuracy)
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0))
+test <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(id_cols=c(ID,condition),
+names_from = condition,
+values_from = Accuracy)
+test <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(id_cols="ID",
+names_from = condition,
+values_from = Accuracy)
+View(test)
+test <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(names_from = condition,
+values_from = Accuracy)
+View(test)
+test <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(id_cols = ID,
+names_from = condition,
+values_from = Accuracy)
+View(test)
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+select(-ID) %>%
+pivot_wider(names_from = condition,
+values_from = Accuracy)
+test <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(names_from = condition,
+values_from = Accuracy)
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(id_cols = c(ID,condition),
+names_from = condition,
+values_from = Accuracy)
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(id_cols = c("ID","condition"),
+names_from = condition,
+values_from = Accuracy)
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0))
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(id_cols = ID,
+id_expand = TRUE,
+names_from = condition,
+values_from = Accuracy)
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(id_cols = c("A","B","C")
+names_from = condition,
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(id_cols = c("A","B","C"),
+names_from = condition,
+values_from = Accuracy)
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(names_from = condition,
+values_from = Accuracy)
+data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(names_from = condition,
+values_from = Accuracy,
+values_fn = mean)
+View(test)
+long <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(id_cols = ID,
+names_from = condition,
+values_from = Accuracy)
+long <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0))
+long <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0))
+long
+long <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0))
+long
+DT::datatable(
+head(mpg, 10),
+fillContainer = FALSE, options = list(pageLength = 8)
+)
+DT::datatable(
+head(long, 10),
+fillContainer = FALSE, options = list(pageLength = 8)
+)
+DT::datatable(
+head(long, 10),
+fillContainer = FALSE
+)
+knitr::kable(head(long), format = 'html')
+long <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10) %>% as.factor(),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0) %>% as.integer())
+library(kableExtra)
+xaringan:::inf_mr()
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+fig.width=9, fig.height=3.5, fig.retina=3,
+out.width = "100%",
+cache = FALSE,
+echo = TRUE,
+message = FALSE,
+warning = FALSE,
+hiline = TRUE
+)
+library(here)
+library(tidyverse)
+library(kableExtra)
+knitr::kable(head(long), format = 'html') %>%
+kable_styling(position = "center")
+long <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10) %>% as.factor(),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0) %>% as.integer())
+a
+knitr::kable(head(long), format = 'html') %>%
+kable_styling(position = "center")
+library(tidyverse)
+long <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10) %>% as.factor(),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0) %>% as.integer())
+knitr::kable(head(long), format = 'html') %>%
+kable_styling(position = "center")
+wide <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0)) %>%
+pivot_wider(names_from = condition,
+values_from = Accuracy,
+values_fn = mean)
+long <- data.frame(ID=rep(1:10,3,each=3),
+condition=rep(c("A","B","C"),10) %>% as.factor(),
+Accuracy = runif(30, min=50, max=98) %>% round(digits=0) %>% as.integer())
+long
+knitr::kable(head(long), format = 'html')
+knitr::kable(head(long), format = 'html') %>%
+kable_styling(position = "center")
+knitr::kable(head(long), format = 'html', align="lll")
+knitr::kable(head(long), format = 'html', align="rrr")
+tbllong <- knitr::kable(head(long), format = 'html', align="rrr")
+xaringan:::inf_mr()
+??kable_styling
+??kable
+??knitr::kable
+xaringan:::inf_mr()
+setwd("~/Dropbox/Main/github/How_to_R/How_to_R_slide/test")
+library(here)
+here()
+setwd("~/Dropbox/Main/github/How_to_R")
+data(iris)
+View(iris)
+iris %>% head
+??iris
+data.frame(ID=rep(1:3, 2))
+data.frame(ID=rep(1:3, 2, each=2))
+data.frame(ID=rep(1:3, 1, each=2))
+data.frame(ID=rep(1:3, 1, each=2),
+age=runif(12, 20, 50) %>% round(0))
+data.frame(age=runif(12, 20, 50) %>% round(0))
+data.frame(age=runif(12, 20, 50) %>% round(0)) %>%
+head
+data.frame(age=runif(100, 20, 50) %>% round(0)) %>%
+head
+age <- data.frame(age=runif(100, 20, 50) %>% round(0))
+knitr::kable(age, format = 'html', align="c")
+?head
+mean(age)
+age <- age=runif(100, 20, 50) %>% round(0)
+age <- runif(100, 20, 50) %>% round(0)
+knitr::kable(head(age, n=5), format = 'html', align="c", table.attr = "style='width:30%;'")
+colnames(age) <- "age"
+age <- runif(100, 20, 50) %>% round(0)
+colnames(age) <- "age"
+colnames(age)
+age
+mean(age)
