@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>How to R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Takato Oyama" />
+    <meta name="author" content="Senshu University" />
+    <meta name="date" content="2023-01-28" />
+    <script src="How_to_R_slide_files/header-attrs/header-attrs.js"></script>
+    <script src="How_to_R_slide_files/kePrint/kePrint.js"></script>
+    <link href="How_to_R_slide_files/lightable/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# How to R
+]
+.subtitle[
+## Version 0.1
+]
+.author[
+### Takato Oyama
+]
+.author[
+### Senshu University
+]
+.date[
+### 2023-01-28
+]
+
+---
+
+
+
+
+
+
+&lt;style type="text/css"&gt;
+.level1 {
+  color:red; font-weight: bold; text-decoration:underline;
+  padding: 0px;
+  margin: 0px;
+}
+
+.level2{
+  color:red; text-decoration:underline;
+  text-decoration-color: #23395b;
+    padding: 0px;
+  margin: 0px;
+}
+
+.level3{
+  text-decoration:underline;
+}
+
+.pull-left {
+  float: left;
+  width: 72%;
+}
+.pull-right {
+  float: right;
+  width: 25%;
+}
+
+.remark-slide table{
+        width: 100%;
+    }
+    
+.code {
+  background-color: rosybrown;
+}
+.vertical {
+  display:flex;
+  justify-content: center; 
+}
+&lt;/style&gt;
+
+
+# Introduction
+- 本資料はRで前処理を行うための知識をまとめたものである。
+- 心理学的研究を行う上で必要なRの情報を整理し、実際のコードとアウトプットを確認する。
+- 基本的なデータ分析をRで行ったことがある人に向けて書いてあるため、RやRstudioのインストールなどについてはここでは触れない。
+- 前処理について整理したものであるが、そうは言っても確認しておくべきプログラミングの知識(関数とは何か、パスとは何か)については触れざるをえないため、簡単にまとめる。
+- また、本資料で覚えておいてほしい単語については3段階のレベルに分けて強調文字を使用している。
+
+&lt;span class="level1"&gt;レベル1 : Rを利用する上で頻出する関数や知識。何度も使用することがあるため、覚えておくと良いだろう。&lt;/span&gt;
+
+&lt;span class="level2"&gt;レベル2 : 解析の目的などに応じて必要になる関数や知識。人によっては覚えていなくても良いが、必要になった時に復習できるようにしておくと良い。&lt;/span&gt;
+
+&lt;span class="level3"&gt;レベル3 : Rを利用する上で、必須ではない知識。ただし、知っていると簡潔にコードを書けたりする。&lt;/span&gt;
+
+---
+class: inverse center middle
+
+# Rを触る前に
+
+---
+name: preknowlede
+## 関数とは
+- Rに限らず多くのプログラミングでは、関数を使いながら処理を行う。
+- 関数：与えられた入力をもとに、定められた独自の処理を実行し、その結果を返す命令のことを指す。
+
+一度数学を思い出そう
+
+- `\(f(x)=x^2\)` とは、 `\(x\)` という入力があった場合にそれを二乗して出力する
+  - 入力は一つだけではなく、関数によっては複数必要な場合がある
+  - `\(f(x,y)=\frac{x}{y}\)`であれば、 `\(x\)` と `\(y\)` という二つの入力がなければ計算ができない
+
+- プログラミングでも同様で、mean(x)とはxという入力があった際に(xの中にいくつかの値がまとめられている)それを平均したものを出力する。
+  - Rにおけるround(x,y)という関数はxという数値を小数y桁目で四捨五入する
+  
+---
+name: preknowlede
+
+## 関数とは
+- 関数はあらかじめ決められた種類の入力しか受け付けてくれない
+  - `\(f(x)=x^2\)`という関数は `\(x\)`という入力を受け付けるが、 `\(y\)` を入力しても計算できない
+  
+- プログラミングの関数においてどのような入力が必要かは事前に決められている
+- 関数に必要な入力のことをプログラミングでは&lt;span class="level1"&gt;引数(argument)&lt;/span&gt;と呼ぶ。
+
+  - cor関数の例
+      - Rでは相関係数を算出する際にcor関数を使う
+      - cor関数に必要な引数はx, y, methodである。
+      - 二つのデータ(xとy)とmethod(pearson, kendall, spearman)を指定することができる
+      -  実際にRで実行する際は以下のように記述する。
+
+```r
+cor(x = X, y = Y, method="spearman")
+```
+---
+## 関数とは
+- 引数は関数によって異なり、指定する順番が厳密に定められている。
+  - わざわざ引数の名称を指定せずともこの順番を守ってさえいれば正しく出力を返してくれる
+  - 例えば、以下のように記述しても先程のコードと全く同じように挙動する。
+
+```r
+cor(X, Y, "spearman")
+```
+- 引数の順番は厳密に決められていることからその順番のことを強調して一つ目の引数を&lt;span class="level1"&gt;第一引数&lt;/span&gt;と呼ぶ。
+  - 二つ目、三つ目も同様に第二引数、第三引数...と呼ぶ。
+    - 例) cor関数の第一引数はx、第二引数はy、第三引数はmethodである
+      - 例外として、引数名を指定しておけば順番を無視して記述することもできる。
+
+```r
+cor(method="speaman", y = Y, x = X)
+```
+- 引数の中には指定しなくても問題がある場合がある。例えばcor関数ではmethodを指定しなくても良い。
+  - これはデフォルトの入力が決められており、引数を指定しない場合はデフォルトの指定に従うためである(cor関数の場合methodのデフォルトは"pearson"になっている)。
+
+---
+## 関数とは
+- 何か関数を使いたい時に、「どんな引数をとるんだっけ？」といった困りごとが出てくる。
+- そんなときは`?関数名` あるいは `??関数名`を実行しよう
+  - RstudioのHelpタブにその関数の説明が表示される
+- 例えば、以下を実行すると
+
+```r
+?cor
+```
+&lt;div style="text-align: center;"&gt;&lt;img src="/How_to_R_slide/imgs/help.png" width="50%"&gt;&lt;div&gt;
+---
+name: path
+## パスとは何か
+- すでにRを触ったことがある人はディレクトリ・ワーキングディレクトリという用語を聞いたことがあるであろう。
+- パスとは
+  - 「ファイルやフォルダの置いてある場所を示す情報。」
+  - あるいは「ファイルやフォルダの置いてある場所を示す情報。」+「ファイル名」
+    - パソコンの中の住所(経路)と考えて良い。あるいは住所+名前。
+- 実際に分析する際は、データファイルを読み込みながらスクリプトファイルを編集する。
+  - &lt;span class="level1"&gt;データファイルなどを読み込むにはパス(住所)を必ず指定しなければならない。
+- パスはパソコンの中で階層構造になっている。以下にwidonwsとmacのパスの例を示す
+  - C:\\Users\\takato\\Documents\\KJ1\囚人のジレンマ\\レポート.docs
+  - /Users/takato/documents/KJ1/囚人のジレンマ/レポート.docs
+- &lt;span class="level1"&gt;ワーキングディレクトリ&lt;/span&gt;
+  - パスの起点を示す。
+  - Rでは&lt;span class="level2"&gt;setwd()&lt;/span&gt;で起点を設定でき,&lt;span class="level2"&gt;getwd()&lt;/span&gt;で起点がどこか確認することができる 
+
+&lt;p style="font-size: 18px;"&gt;(注)ディレクトリはフォルダと言い換えてもらってかまわない&lt;/p&gt;
+---
+name: path
+## 絶対パスと相対パス
+- &lt;span class="level3"&gt;絶対パス&lt;/span&gt;
+  - フルパスとも呼ばれる
+  - 階層構造の頂点から目的地までの経路を全て記述したパス。
+    - 全ての経路を記述しているため、ワーキングディレクトリ(起点)に依存せずさまざまなファイルにアクセスできる
+    - 長くなるので記述が面倒という欠点がある
+    
+- &lt;span class="level3"&gt;相対パス&lt;/span&gt;
+  - ワーキングディレクトリ(起点)から目的地までの経路を記述したパス。
+    - 例) KJ1ディレクトリがワーキングディレクトリだった場合以下でファイルにアクセスすることができる
+      - 囚人のジレンマ/レポート.docs
+  - 短く記述できるという長所がある一方、ワーキングディレクトリを変更したり、フォルダ整理すると階層構造が変わるためアクセスできなくなる場合がある。
+
+---
+name: package
+## パッケージとは何か
+- Rには統計解析を行う上で解析を楽にする関数がデフォルトでたくさんある。
+  - この標準搭載の関数で基本的な解析は問題なく行える
+  - しかし、標準搭載の関数では実装されていない解析手法やよりわかりやすく記述することができように追加で実装された関数などがある
+  - このようにRの機能を拡張する関数、データ、資料の集まりを&lt;span class="level1"&gt;package(パッケージ)&lt;/span&gt;と呼ぶ。
+- 例えば、心理学者がよく使う分析を楽に行うための関数がたくさん入ったpsychパッケージなどがある
+- 使用したいパッケージを見つけた際はまずインストールする必要がある(基本的には一度行う)。
+  - `install.packages("パッケージ名")`とする
+    - 一度インストールすれば問題ないが、バージョンアップする際はもう一度実行する必要がある
+- また、そのパッケージを実際に利用する際は毎回そのことを明示する必要がある
+  - `library(パッケージ名)`とする
+  
+
+```r
+install.packages("psych")
+library(psych)
+```
+
+---
+name: type_data
+## ワイドデータとロングデータ
+.pull-left[
+- データの形は大きく分けてワイドデータとロングデータの2種類ある
+- &lt;span class="level1"&gt;ワイドデータ&lt;/span&gt;
+  - 横持ちデータとも呼ばれる
+  - 列名もデータの一部になっていることがある。
+- 右のようなデータで、列がIDと実験条件などになっている。
+  - 条件が増えると列数が増えていく
+  - SPSSやJASP、Excelなどでの処理は基本的にはこの形
+  - 列名にデータが含まれるため、統計解析においてはあまり向いていない
+
+
+]
+.pull-right[
+&lt;table class="table" style="font-size: 32px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; A &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; B &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; C &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 78 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 97 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 68 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 86 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 71 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 63 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 51 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 62 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 57 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 91 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 95 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 92 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 62 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 83 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 79 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 64 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 89 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 92 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+  
+]
+
+---
+name: longdata
+## ワイドデータとロングデータ
+.pull-left[
+- &lt;span class="level1"&gt;ロングデータ&lt;/span&gt;
+  - 縦持ちデータ、tidyデータ、整然データとも呼ばれる
+  - 個々の値が1つのセルをなしており、個々の変数が1つの列をなしている。
+  - 個々の観測が1つの行をなしており、データが増えると縦に伸びていく。
+- ロングデータとワイドデータのどちらが優れいているかというよりも、自身の解析目的とソフトウェアに合ったデータの形に処理する必要がある。
+
+- 本資料で扱うtidyverseパッケージとはこのようなtidyデータを簡単に扱う関数群である
+]
+.pull-right[
+&lt;table class="table" style="font-size: 26px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; condition &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Accuracy &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 52 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 67 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; C &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 54 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 71 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 87 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; C &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 93 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+  
+]
+
+---
+name: object
+## オブジェクトとは何か
+- Rにおける&lt;span class="level2"&gt;オブジェクト&lt;/span&gt;とは、変数や文字列、データのかたまりのことを指す
+  - 何らかの変数や値を持つ入れ物と考えて良い。
+  - R上で`A &lt;- 1`と入力したら、Aというオブジェクトの中に1という値が入る(代入する)ことになる
+    - `A &lt;- "Hello"`とすれば、Aのオブジェクトに"Hello"という文字列が代入されることになる
+- どんなモノでもオブジェクトに格納できるが、中身がどのような型かはR上で識別されている。
+- 関数によって入力できるデータ型は決められているため、データ型を把握しておかなければ予期せぬエラーが吐かれることがある。
+  - 例えば、実験のデータをcsvファイルで読み込んだ際に、数値のデータが文字列型として記録されていることがある。
+  - このデータを用いて平均値を算出しようとしても文字列なので計算できない。
+  - このような場合は`as.numeric()`などの関数を用いて、文字列から変換する必要がある。
+    - 後述する`mutate()`関数と併用すると直感的でわかりやすく処理できる。
+- ここではデータ型について詳細まで触れないが、以下のサイトなどが参考になる。
+  https://obgynai.com/r-object-orientation/
+  https://tomoecon.github.io/R_for_graduate_thesis/Rbasics.html
+
+---
+class: inverse center middle
+
+# Rstudioを開いたら
+
+---
+name: rproject
+## Rproject
+- RStudioには&lt;span class="level2"&gt;「プロジェクト」&lt;/span&gt;という機能がある。
+  - ファイル管理が簡単になるため、使用することを推奨する。
+  - いくつか利用の利点があるが、ここでは割愛する。
+  - 作成方法はここでは触れない。
+- 以下のサイトがわかりやすい。
+
+[Rstudioの使い方](https://tomoecon.github.io/R_for_graduate_thesis/RStudio.html#%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E4%BD%9C%E6%88%90)
+
+- 1つの研究プロジェクトにつき、Rプロジェクトを作ると管理が非常にしやすい。
+  - プロジェクトを作成するとそのディレクトリが自動的にワーキングディレクトリに設定される。
+  - Rプロジェクトを作成し、そのディレクトリの中に「analysis」「data」「output」「docs」などのディレクトリを作成すると良い。
+    - 分析は全て「analysis」ディレクトリに、メモや論文の原稿などは「docs」ディレクトリに入れておくと管理がしやすい。
+    - ワーキングディレクトリは基本的にいじらず、パスを指定してデータへのアクセスや図の保存先を指定すると良いだろう。
+---
+name: here
+## here package
+- &lt;span class="level3"&gt;hereパッケージ&lt;/span&gt;は簡単に絶対パスを取得できる`here()`関数を使えるようになる
+  - この`here()`関数はRプロジェクトと密接に関わっており、プロジェクトファイル(.Rproj)のあるディレクトリのパスを取得できる
+  - 下の階層のディレクトリやファイルにアクセスする際は引用符で囲み指定する。
+
+```r
+library(here)
+here()
+```
+
+```
+## [1] "/Users/oyama/Dropbox/Main/github/How_to_R"
+```
+
+```r
+here("data","sample.csv")
+```
+
+```
+## [1] "/Users/oyama/Dropbox/Main/github/How_to_R/data/sample.csv"
+```
+- dataディレクトリのsample.csvファイルを読み込みたい場合は以下のようにすれば良い
+
+```r
+read.csv(here("data","sample.csv"))
+```
+
+---
+class: inverse center middle
+
+# いざtidyverseへ！
+---
+name: tidyverse
+
+## tidyverse package
+- &lt;span class="level1"&gt;tidyverse&lt;/span&gt;はreadrパッケージやdplyrパッケージなどのパッケージをまとめたパッケージである
+  - 前述したようにtidyデータを処理する際に便利な関数やデータをまとめている。
+- tidyverseの中にあるパッケージをまとめた
+  - &lt;span class="level1"&gt;magrittr&lt;/span&gt; : パイプ(%&gt;%)演算子の機能を提供するパッケージ
+  - &lt;span class="level1"&gt;dplyr&lt;/span&gt; : データの抽出・加工・操作のためのパッケージ
+  - &lt;span class="level1"&gt;stringr&lt;/span&gt; : 文字列を処理するためのパッケージ
+  - &lt;span class="level1"&gt;ggplot2&lt;/span&gt; : 図の描画などグラフィックスに特化したパッケージ
+  - &lt;span class="level2"&gt;readr&lt;/span&gt; : データの読み込みに特化したパッケージ
+  - &lt;span class="level2"&gt;purrr&lt;/span&gt; : 関数型プログラミングを実装するパッケージ(並列処理を可能にする)
+  - &lt;span class="level2"&gt;tibble&lt;/span&gt; : tibble型データを作成、操作するパッケージ
+  - &lt;span class="level2"&gt;tidyr&lt;/span&gt; : tidyデータを作成、操作するパッケージ
+  - &lt;span class="level3"&gt;forcats&lt;/span&gt; : factor型データを処理するパッケージ
+
+- 本資料はこれらのパッケージの中で実験心理学で頻出するであろう便利な関数を**ほんの少しだけ**紹介する
+---
+class: inverse center middle
+
+# パイプ演算子　%&gt;% 
+---
+
+name: pipe
+
+## パイプ演算子 %&gt;% 
+- tidyverseを使う上で必ず必要になるパイプ。
+- よりスマートなコードを書くことを可能にする。
+- Rコードは様々な関数を組み合わせて最終的なゴール(理想的なデータの形)へと向かっていく
+  - しかし、関数を複数個使うとコードは煩雑になり、どこでどのような処理を行なっていくのかわからなくなる。
+  - そんな問題を解決するのが&lt;span class="level1"&gt;パイプ演算子&lt;/span&gt;なのだ。
+- &lt;span class="level1"&gt;パイプ演算子は前のオブジェクトを後ろの関数の第一引数に渡してくれる。&lt;/span&gt;
+- 例えば何か平均を算出する時、パイプを使わないと以下になる
+
+```r
+mean(x)
+```
+- パイプを使うと以下
+
+```r
+x %&gt;% mean()
+```
+
+---
+name: pipe
+## パイプ演算子 %&gt;% 
+- 短いコードだと恩恵が分かりにくいが、複数の関数が出てくると非常に煩雑になる
+  - 三つの関数が連なるとイメージは以下
+    - パイプなし : `h(g(f(x)))`
+    - パイプあり : `x %&gt;% f() %&gt;% g() %&gt;% h()`
+- コードを記述するとき思考の流れは`f() → g() → h()`という処理を考えているはずだ。
+  - しかし、パイプなしでコードで書くと`h()  → g() → f()`という順になってしまう。
+  - パイプは思考の流れに沿ったコードの記述が可能になるため、非常に重宝する。
+- あるデータの平均値を算出し、小数点以下を四捨五入することを考える
+- パイプなし : (四捨五入の関数を先に書くことになる)
+
+
+```r
+round(mean(x), 0)
+```
+  
+- パイプあり : (xを平均して、四捨五入するという思考の流れと一致する。)
+  
+
+```r
+x %&gt;% mean() %&gt;% round(0)
+```
+
+
+---
+name: readr
+## read_csv
+- まずはデータを読み込もう。
+- csvファイルをRで読み込む際はreadrパッケージにある&lt;span class="level1"&gt;`read_csv()`&lt;/span&gt;がおすすめである。
+- デフォルトで搭載されている`read.csv()`に比べて処理が早く、複数のcsvファイルをまとめて読み込むことができるという素晴らしい機能を持つ。`read.csv()`を使っている方は今すぐ乗り換えるべきだ。
+
+- 指定したパスにあるファイル名を取得する`list.files()`とパスを取得する`here()`を使えば、簡単だ。
+  - 例えば、dataディレクトリにはparticipant1.csvとpartipant2.csvという二つのデータがあったとしよう。
+
+```r
+list.files(here("data"), full.names = TRUE)
+```
+
+```
+## character(0)
+```
+
+---
+name: readr
+## read_csv
+- また、この2つのパスをオブジェクトに格納し、`read_csv`で読み込めば良い。
+
+```r
+files &lt;- list.files(here("data"), full.names = TRUE)
+df &lt;- read_csv(files)
+```
+- 参加者の人数分csvファイルがある場合はこのようにすれば良い。
+- 1つの研究プロジェクトで複数の実験がある場合はdataディレクトリの中に新たにExp1,Exp2などのディレクトリを作成し、階層化しておくと良いだろう。
+  - &lt;span class="level1"&gt;プログラミングにおいてディレクトリ管理は避けては通れない&lt;/span&gt;。
+  
+---
+
+class: inverse center middle
+# データ例
+
+---
+name: exdata
+## データ例
+- 本資料では以下のような実験データセットを例にする。
+- 実験データ(df)
+  - 文字・色ストループの実験データ
+  - インクの色が赤ならfキー、緑ならjキーを押す課題である。
+  - 2人の参加者の練習試行10試行。本試行30試行でデータは60行ある。
+  - 練習試行のデータはpractice列がpracticeで、本試行はmainが入っている。
+  
+
+
+
+&lt;table class="table" style="font-size: 26px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; trial &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; word &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; ink &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; response &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; reactiontime &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; practice &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 414.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 448.68 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 464.21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 421.69 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+---
+
+class: inverse center middle
+# dplyr
+
+
+---
+
+name: filter
+## `filter()`
+- &lt;span class="level1"&gt;filter()&lt;/span&gt;は行選択の関数である。
+- 指定した列の条件に合う行のみを抽出する際に使用する。
+- 例えば、本試行のデータのみを抽出するには以下になる
+
+```r
+df %&gt;% 
+  filter(practice == "main")
+```
+
+- `==`は `\(=\)` を表し、`!=`は `\(\neq\)` を表す。
+  - 上記の例は`filter(practice != "practice")`でも同様の結果になる。
+- `&gt;`や`&lt;`などの不等号も使用できる。また、以上、以下は`&gt;=`、`&lt;=`で表現される。
+  - 例えば反応時間が100未満を除く場合は
+
+```r
+df %&gt;% 
+  filter(reactiontime &gt; 100)
+```
+
+---
+name: mutate
+## `mutate()`
+- &lt;span class="level1"&gt;mutate()&lt;/span&gt;は新たな列を作成する関数である。
+- 新たな列名とどのような列を作成するのかを指定する。
+- 例えば、反応時間の少数を四捨五入して、それを新たな列RTとするのであれば以下になる
+
+
+```r
+df %&gt;% 
+  mutate(RT = round(reactiontime, 0))
+```
+&lt;table class="table" style="font-size: 26px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; trial &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; word &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; ink &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; response &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; reactiontime &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; practice &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; RT &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 414.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 414 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 448.68 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 449 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 464.21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 464 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 421.69 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 422 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+name: casewhen
+## `case_when()`
+- &lt;span class="level1"&gt;case_when()&lt;/span&gt;は`mutate()`とともに使われ、指定した条件によって異なる値を返す関数である。
+- ストループ課題において、データから文字と色の条件を判定し、`mutate()`で新たな列を作成するなら以下である
+
+
+```r
+df %&gt;% 
+  mutate(congruency = case_when(word == ink ~ "congruent",
+                                word != ink ~ "incongruent"))
+```
+
+&lt;table class="table" style="font-size: 26px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; trial &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; word &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; ink &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; response &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; reactiontime &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; practice &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; congruency &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 414.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; congruent &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 448.68 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; incongruent &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 464.21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; incongruent &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 421.69 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; congruent &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+name: casewhen
+## `case_when()`
+- `filter()`のときと同様に条件式を記述できる。
+- 条件式の後にチルダ(~)をつけ、その条件式に合う場合はどのような値を返すかを指定している。
+- また、指定した条件式以外の条件をまとめて値を返すこともできる。
+  - その際は`TRUE ~ 値`として記述すれば良い。
+  - 以下のコードは先程のコードと同じ出力になる。
+
+```r
+df %&gt;% 
+  mutate(congruency = case_when(word == ink ~ "congruent",
+                                TRUE ~ "incongruent")) 
+```
+---
+name: select
+## `select()`
+- &lt;span class="level1"&gt;`select()`&lt;/span&gt;は列の抽出、並び替えを可能にする。
+- データには多くの変数がある。また、`mutate()`で新しい列を作ると不要な列が出てくる。
+  - 必要な列のみを抽出する。あるいは不要な列を削除する場合は`select()`を使用する。
+- 例えば、ID列、word列、ink列、reactiontime列のみを抽出する場合は以下になる
+
+
+```r
+df %&gt;% 
+  select(ID, word,ink,reactiontime)
+```
+&lt;table class="table" style="font-size: 26px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; word &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; ink &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; reactiontime &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 414.20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 448.68 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 464.21 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 421.69 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+---
+name: select
+## `select()`
+- `select()`は様々な指定の仕方がある。
+  - 具体的に列名を指定するのではなく、「何番目の列か」で指定することができる
+      - 1列目と3列目を指定するなら　→　
+.code[`select(1,3)` ]
+  - 「~から~まで」と範囲で指定することができる(コロン(:)を使う)
+      - ID列からword列までを指定するなら → 
+.code[`select(ID:word)`]
+  - 不要な列を指定する場合はマイナスの記号をつける
+      - word列とink列を削除するなら → 
+.code[`select(-word, -ink)`]
+  - 指定した列以外を抽出する場合は`!`をつける
+      - reactiontime列以外を抽出するなら → 
+.code[`select(!reactiontime)`]
+  - select関数はある特定の関数とともに使用することができる
+      - `starts_with()`関数とともに使えば、特定の列名から始まる列のみを抽出することができる
+      - 列名が「Q」から始まる列を抽出するのであれば → 
+.code[`select(starts_with("Q"))`]
+      - 質問紙調査などの分析をする際に重宝する。
+      
+---
+name: summarise
+##  `summarise()`
+- &lt;span class="level1"&gt;`summarise()`&lt;/span&gt;はデータを要約する際に用いる。
+  - どのような関数を使うか、どの列の値を用いるかを指定することができる
+  - また、要約した際の列名を指定する必要がある
+
+- reactiontime列の平均値と標準偏差を求める場合は以下になる
+
+
+```r
+df %&gt;% 
+  summarise(M = mean(reactiontime), SD = sd(reactiontime)) 
+```
+
+&lt;table class="table" style="font-size: 26px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; M &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; SD &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 403.5635 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30.29108 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+name: groupby
+## `group_by()`
+- &lt;span class="level1"&gt;`group_by()`&lt;/span&gt;はグループごとに`summarise()`を使用する際にグループを指定する。
+  - `summarise()`を単純に使用すると全ての値を要約してしまう。
+  - ある条件ごとに(グループごとに)要約をする場合は`group_by()`でグループを指定してから要約する
+- IDごとにreactiontimeの平均と標準偏差を求める場合は以下になる
+
+```r
+df %&gt;% 
+  group_by(ID) %&gt;% 
+  summarise(M = mean(reactiontime), SD = sd(reactiontime))
+```
+
+&lt;table class="table" style="font-size: 26px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; M &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; SD &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 406.6047 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27.63994 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 400.5223 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 32.91865 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+name: groupby
+## `group_by()`
+- `group_by()`でグループ化を解除する際は&lt;span class="level2"&gt;`ungroup()`&lt;/span&gt;を用いる。
+  - グループ化の解除をし忘れると求めたいものではなくなってしまう。
+  - 問題ない場合もあるが、以下のように`group_by()`を実行したら`ungroup()`で解除する癖を身につけておくと良いだろう。
+  
+
+```r
+df %&gt;% 
+  group_by(ID) %&gt;% 
+  summarise(M = mean(reactiontime), SD = sd(reactiontime)) %&gt;% 
+  ungroup()
+```
+
+---
+name: leftjoin
+## `left_join()`
+- &lt;span class="level2"&gt;`left_join()`&lt;/span&gt;は2つのデータフレームを結合する際に用いる
+  - 指定した列を基に結合し、列を増やす。
+  - 例えば、以下のような質問紙のデータ二つ(AとB)がある
+  
+
+.vertical[
+&lt;div style = "margin: 10px"&gt;
+&lt;table class="table" style="font-size: 20px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q2 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div style = "margin: 10px"&gt;
+&lt;table class="table" style="font-size: 20px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q3 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q4 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+]
+
+---
+name: leftjoin
+## `left_join()`
+- この2つのデータをID列で紐づけて結合するには以下のようにする
+
+```r
+A %&gt;% 
+  left_join(B, by="ID")
+```
+
+&lt;table class="table" style="font-size: 20px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q2 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q3 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q4 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+- AのデータにIDで紐づけてBを結合している。
+- `right_join()`や`full_join()`関数などもあり、挙動が少し変わる。
+  - 実際に触って確認すると良いだろう。
+
+---
+name: bindrows
+## `bind_rows()`
+- &lt;span class="level2"&gt;`bind_rows()`&lt;/span&gt;は2つのデータを行方向に結合する際に使用する。
+  - 二つのデータの列数が一致しないとエラーになる。
+  - 二人分の参加者のデータをデータを一つに結合する際に使用できる。
+  - `read_csv()`ではなく、`read.csv()`などを用いて、個別にデータを読み込み、結合する際に使用できるだろう。
+    - 大量の参加者のデータを結合する際は`for`文で繰り返し処理などを行う必要があり、コードが長くなるため、おすすめしない。
+- 例えば、サンプルデータがIDごとに分かれている以下のようなデータ二つ(AとB)があるとする。
+
+.vertical[
+&lt;div style = "margin: 20px"&gt;
+&lt;table class="table" style="font-size: 20px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; trial &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; word &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; ink &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; response &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; reactiontime &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; practice &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 414.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 448.68 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 464.21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div style = "margin: 20px"&gt;
+&lt;table class="table" style="font-size: 20px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; trial &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; word &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; ink &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; response &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; reactiontime &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; practice &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 403.69 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 397.67 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 439.74 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+]
+---
+name: bindrows
+## `bind_rows()`
+- データAにBを結合するのであれば
+
+```r
+A %&gt;% 
+  bind_rows(B)
+```
+&lt;table class="table" style="font-size: 20px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; trial &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; word &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; ink &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; response &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; reactiontime &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; practice &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 414.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 448.68 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 464.21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 403.69 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 397.67 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 439.74 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+name: bindcols
+## `bind_cols()`
+- &lt;span class="level2"&gt;`bind_cols()`&lt;/span&gt;は2つのデータを列方向に結合する際に使用する。
+  - `left_join()`とは異なり、2つのデータで列名が重複する場合は、列名が勝手に修正される。
+  - また、二つのデータで行数が一致しない場合はエラーになる。
+- 質問紙のデータ二つを考える
+
+
+.vertical[
+&lt;div style = "margin: 10px"&gt;
+&lt;table class="table" style="font-size: 20px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q2 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div style = "margin: 10px"&gt;
+&lt;table class="table" style="font-size: 20px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q3 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q4 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+]
+---
+name: bindcols
+## `bind_cols()`
+- AにBを結合するのであれば
+
+```r
+A %&gt;% 
+  bind_cols(B)
+```
+
+&lt;table class="table" style="font-size: 20px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID...1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q2 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; ID...4 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q3 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q4 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+class: inverse center middle
+
+# 終わりに
+
+---
+name: end
+## 終わりに
+- 本資料で扱った関数はtidyverse(主にdplyr)の中のほんの一部である。
+  - ここで紹介した関数の派生系のものもあるが、ここでは紹介できなかった。
+  - 文字列処理のstringrや可視化のためのggplot2などもあり、紹介できなかったものは少しずつバージョンアップデートするつもりである。
+- 基本的なRとRstudioの使い方、tidyverseの使い方は以下の書籍が参考になる
+  - 初学者は教科書的に持っておくと有用かもしれない。
+&lt;div style="text-align: center;"&gt;&lt;img src="/How_to_R_slide/imgs/book.jpeg" width="17.5%"&gt;&lt;/div&gt;
+[RユーザのためのRStudio[実践]入門〜tidyverseによるモダンな分析フローの世界](https://gihyo.jp/book/2021/978-4-297-12170-9). 
+
+---
+name: cheatsheet
+## チートシート
+- Rに限らず、プログラミング言語では多くの場合チートシートが作成される
+  - チートシートは文字通り、チートするための情報が情報が書かれている。
+  - 例えば、dplyrとtidyrのチートシートは以下である
+  
+https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
+
+- 本資料で紹介した関数も含めてその関数の引数、挙動が視覚的にまとめられている。
+  - 非常に有用である。
+  - ただし、このチートシートも全ての関数を紹介しきれているわけではないので、自分のやりたい処理がチートシートに載っていないからといって落胆する必要はない。
+- バージョンアップデートなどで少し変化があったりもするので注意が必要である。「dplyr cheat sheet」などでググれば見つかるはずである。
+- 他にもggplotのチートシートなどもあり、自身がよく使うパッケージのパッケージのチートシートが作成されていないか確認すると良いだろう。
+
+---
+name: end
+## 終わりに
+- 最後にストループ課題のデータのサンプルデータとデータ整形のサンプルスクリプトは以下である。
+- データ整形から外れ値の処理、論文に必要な要約統計量の記述、ggplot2による可視化までを含む。
+
+
+<a href="data:application/zip;base64,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" download="sample.zip">Download full data &amp; script</a>
+
+
+
+
+
+  
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
