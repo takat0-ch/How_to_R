@@ -162,7 +162,7 @@ cor(method="speaman", y = Y, x = X)
 ```{r, eval=FALSE}
 ?cor
 ```
-<div style="text-align: center;"><img src="/How_to_R_slide/imgs/help.png" width="50%"><div>
+<div style="text-align: center;"><img src="/imgs/help.png" width="50%"><div>
 ---
 name: path
 ## パスとは何か
@@ -815,7 +815,7 @@ name: end
   - 文字列処理のstringrや可視化のためのggplot2などもあり、紹介できなかったものは少しずつバージョンアップデートするつもりである。
 - 基本的なRとRstudioの使い方、tidyverseの使い方は以下の書籍が参考になる
   - 初学者は教科書的に持っておくと有用かもしれない。
-<div style="text-align: center;"><img src="/How_to_R_slide/imgs/book.jpeg" width="17.5%"></div>
+<div style="text-align: center;"><img src="imgs/book.jpeg" width="17.5%"></div>
 [RユーザのためのRStudio[実践]入門〜tidyverseによるモダンな分析フローの世界](https://gihyo.jp/book/2021/978-4-297-12170-9). 
 
 ---
