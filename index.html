@@ -7,6 +7,7 @@
     <meta name="author" content="Senshu University" />
     <meta name="date" content="2023-02-17" />
     <script src="index_files/header-attrs/header-attrs.js"></script>
+    <script src="index_files/xaringanExtra-progressBar/progress-bar.js"></script>
     <script src="index_files/kePrint/kePrint.js"></script>
     <link href="index_files/lightable/lightable.css" rel="stylesheet" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
@@ -37,6 +38,27 @@ class: center, middle, inverse, title-slide
 
 
 
+
+<style>.xe__progress-bar__container {
+  top:0;
+  opacity: 1;
+  position:absolute;
+  right:0;
+  left: 0;
+}
+.xe__progress-bar {
+  height: 10px;
+  background-color: #0051BA;
+  width: calc(var(--slide-current) / var(--slide-total) * 100%);
+}
+.remark-visible .xe__progress-bar {
+  animation: xe__progress-bar__wipe 200ms forwards;
+  animation-timing-function: cubic-bezier(.86,0,.07,1);
+}
+@keyframes xe__progress-bar__wipe {
+  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
+  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
+}</style>
 
 &lt;style type="text/css"&gt;
 .level1 {
@@ -243,39 +265,39 @@ name: type_data
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 95 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 94 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 71 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 69 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 78 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 85 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 70 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 57 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 76 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 79 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 59 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 82 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 55 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 77 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 55 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 85 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 80 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 93 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 96 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 64 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 81 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 54 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 82 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 78 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 81 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 79 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 69 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 63 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 58 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 81 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 54 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 71 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 61 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 51 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 78 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -307,32 +329,32 @@ name: longdata
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 94 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 54 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; B &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 84 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 74 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; C &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 63 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 58 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 65 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 63 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; B &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 56 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 57 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; C &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 86 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 69 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -549,7 +571,7 @@ name: exdata
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 442.11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 417.93 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -558,7 +580,7 @@ name: exdata
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 389.42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 352.48 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -567,7 +589,7 @@ name: exdata
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 402.11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 435.36 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -576,7 +598,7 @@ name: exdata
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 403.42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 417.82 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -642,9 +664,9 @@ df %&gt;%
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 442.11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 417.93 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 442 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 418 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
@@ -652,9 +674,9 @@ df %&gt;%
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 389.42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 352.48 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 389 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 352 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
@@ -662,9 +684,9 @@ df %&gt;%
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 402.11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 435.36 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 402 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 435 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
@@ -672,9 +694,9 @@ df %&gt;%
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 403.42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 417.82 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 403 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 418 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -712,7 +734,7 @@ df %&gt;%
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 442.11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 417.93 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; congruent &lt;/td&gt;
   &lt;/tr&gt;
@@ -722,7 +744,7 @@ df %&gt;%
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 389.42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 352.48 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; incongruent &lt;/td&gt;
   &lt;/tr&gt;
@@ -732,7 +754,7 @@ df %&gt;%
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 402.11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 435.36 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; incongruent &lt;/td&gt;
   &lt;/tr&gt;
@@ -742,7 +764,7 @@ df %&gt;%
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 403.42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 417.82 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; congruent &lt;/td&gt;
   &lt;/tr&gt;
@@ -790,25 +812,25 @@ df %&gt;%
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 442.11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 417.93 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 389.42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 352.48 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 402.11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 435.36 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 403.42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 417.82 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -858,8 +880,8 @@ df %&gt;%
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 404.8747 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 31.97736 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 403.7353 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30.58456 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -889,13 +911,13 @@ df %&gt;%
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 404.2963 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 29.63896 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 408.7437 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30.71324 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 405.4530 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 34.65839 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 398.7270 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30.13115 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -936,22 +958,22 @@ name: leftjoin
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -970,21 +992,21 @@ name: leftjoin
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -1015,30 +1037,30 @@ A %&gt;%
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -1078,7 +1100,7 @@ name: bindrows
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 442.11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 417.93 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -1087,7 +1109,7 @@ name: bindrows
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 389.42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 352.48 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -1096,7 +1118,7 @@ name: bindrows
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 402.11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 435.36 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -1122,7 +1144,7 @@ name: bindrows
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 372.63 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 375.22 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -1131,7 +1153,7 @@ name: bindrows
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 467.26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 381.04 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -1140,7 +1162,7 @@ name: bindrows
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 374.65 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 379.08 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -1175,7 +1197,7 @@ A %&gt;%
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 442.11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 417.93 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -1184,7 +1206,7 @@ A %&gt;%
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 389.42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 352.48 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -1193,7 +1215,7 @@ A %&gt;%
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 402.11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 435.36 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -1202,7 +1224,7 @@ A %&gt;%
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 372.63 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 375.22 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -1211,7 +1233,7 @@ A %&gt;%
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; green &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; j &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 467.26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 381.04 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -1220,7 +1242,7 @@ A %&gt;%
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; red &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; f &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 374.65 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 379.08 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; practice &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -1248,23 +1270,23 @@ name: bindcols
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1281,13 +1303,13 @@ name: bindcols
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
@@ -1296,7 +1318,7 @@ name: bindcols
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -1327,34 +1349,34 @@ A %&gt;%
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -1398,7 +1420,7 @@ name: end
 - データ整形から外れ値の処理、論文に必要な要約統計量の記述、ggplot2による可視化までを含む。
 
 
-<a href="data:application/zip;base64,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" download="sample.zip">Download full data &amp; script</a>
+<a href="data:application/zip;base64,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" download="sample.zip">Download full data &amp; script</a>
 
 
 

@@ -43,6 +43,10 @@ style_mono_light(base_color = "#23395b",
 #)
 ```
 
+```{r xaringanExtra, echo = FALSE}
+xaringanExtra::use_progress_bar(color = "#0051BA", location = "top", height = "10px")
+```
+
 ```{css, echo=FALSE}
 .level1 {
   color:red; font-weight: bold; text-decoration:underline;
