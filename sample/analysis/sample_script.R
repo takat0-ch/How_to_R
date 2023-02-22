@@ -13,17 +13,17 @@ df.origin <- df %>%
          ans = case_when(ink == resp_color ~ 1,
                          ink != resp_color ~ 0)) %>% 
   filter(practice == "main") %>% 
-  select(ID, congruency, reactiontime, ans)
-
-outlier_baseline <- df.origin %>% 
+  select(ID, congruency, reactiontime, ans) %>% 
   group_by(ID, congruency) %>% 
-  summarise(M = mean(reactiontime), SD = sd(reactiontime)) %>% 
+  mutate(M = mean(reactiontime),
+         SD = sd(reactiontime)) %>% 
   ungroup()
+
+  
 
 ## Mean+-3SD is regarded as outliers
 
 df.main <- df.origin %>% 
-  left_join(outlier_baseline, by=c("ID","congruency")) %>% 
   mutate(outlier = case_when(reactiontime < M-3*SD ~ 0,
                              reactiontime > M+3*SD ~ 0,
                              TRUE ~ 1)) %>% 
@@ -46,6 +46,7 @@ for_plot <- for_ttest %>%
 
 library(papaja)
 library(scales)
+
 ggplot(data=for_plot,
        aes(x=congruency,
            y=ReactionTime,
@@ -58,3 +59,4 @@ ggplot(data=for_plot,
                      breaks = seq(300,410,20),
                      oob = squish)+
   papaja::theme_apa()
+
